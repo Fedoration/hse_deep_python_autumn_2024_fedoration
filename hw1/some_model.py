@@ -1,6 +1,7 @@
 class SomeModel:
     def fit(self, data: list[str]) -> None:
         raise NotImplementedError
+
     def predict(self, message: str) -> float:
         raise NotImplementedError
 
