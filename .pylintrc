@@ -6,4 +6,4 @@ disable=
     C0103
 
 [FORMAT]
-max-line-length=80
+max-line-length=120
