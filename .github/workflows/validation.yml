@@ -24,15 +24,15 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Check flake8
-        run: flake8 .
+        run: cd 01 && flake8 . && cd ..
 
       - name: Check pylint
         if: ${{ always() }}
-        run: pylint ./*/*.py
+        run: cd 01 && pylint . && cd ..   
 
       - name: Check tests with pytest
         if: ${{ always() }}
-        run: coverage run -m pytest .
+        run: cd 01 && coverage run -m pytest . && cd ..
 
       - name: Check test coverage
-        run: coverage report -m
+        run: cd 01 && coverage report -m && cd ..

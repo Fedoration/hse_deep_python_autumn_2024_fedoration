@@ -1,7 +1,7 @@
 import unittest
 from io import StringIO
 
-from hw1.file_reader import file_reader
+from file_reader import file_reader
 
 
 class TestFileReader(unittest.TestCase):
@@ -35,7 +35,9 @@ class TestFileReader(unittest.TestCase):
 
     def test_no_match(self):
         """Проверка строки без совпадений."""
-        file_content = StringIO("Сократ любит лаванду\nПлатон любит жареный креветки\n")
+        file_content = StringIO(
+            "Сократ любит лаванду\nПлатон любит жареный креветки\n"
+        )
         words_to_search = ["роза"]
         stopwords = []
 
@@ -51,7 +53,9 @@ class TestFileReader(unittest.TestCase):
         stopwords = ["азора"]
 
         result = list(file_reader(file_content, words_to_search, stopwords))
-        self.assertEqual(result, ["Сократ посадил дерево", "Платон полил дерево"])
+        self.assertEqual(
+            result, ["Сократ посадил дерево", "Платон полил дерево"]
+        )
 
     def test_multiple_lines_with_and_without_matches(self):
         """Проверка работы с несколькими строками,
