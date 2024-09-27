@@ -4,7 +4,8 @@ disable=
     C0115,
     C0116,
     C0103,
-    E0401
+    E0401,
+    W0718
 
 [FORMAT]
 max-line-length=120
