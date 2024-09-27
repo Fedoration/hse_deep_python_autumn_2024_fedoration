@@ -1,65 +1,73 @@
 import unittest
+
 from retry_decorator import retry_deco
 
 
-@retry_deco(max_retries=3)
-def success_function(x):
-    return x
-
-
-@retry_deco(max_retries=3)
-def always_failing_function():
-    raise ValueError("This always fails")
-
-
-@retry_deco(max_retries=3, exceptions=[ValueError])
-def stop_on_value_error():
-    raise ValueError("Stop retrying on this error")
-
-
-@retry_deco(max_retries=3)
-def succeeds_after_two_failures():
-    if succeeds_after_two_failures.attempts < 2:
-        succeeds_after_two_failures.attempts += 1
-        raise RuntimeError("Temporary error")
-    return "Success"
-
-
-succeeds_after_two_failures.attempts = 0
-
-
 class TestRetryDecorator(unittest.TestCase):
-    def test_successful_function(self):
-        """Проверяет, что функция без ошибок завершается успешно"""
-        result = success_function(5)
-        self.assertEqual(result, 5)
 
-    def test_always_failing_function(self):
-        """Проверяет, что функция всегда выдает None после максимального количества попыток"""
-        result = always_failing_function()
-        self.assertIsNone(result)
+    def test_success_on_first_attempt(self):
+        """Проверяем корректное выполение на первой попытке"""
+        attempts = {"count": 0}
 
-    def test_stop_on_specific_exception(self):
-        """Проверяет, что декоратор корректно обрабатывает исключение ValueError"""
-        result = stop_on_value_error()
-        self.assertIsNone(result)
+        @retry_deco(max_retries=3)
+        def func():
+            attempts["count"] += 1
+            return "success"
 
-    def test_succeeds_after_retries(self):
-        """Проверяет, что функция успешно завершается после нескольких неудачных попыток"""
-        succeeds_after_two_failures.attempts = 0
-        result = succeeds_after_two_failures()
-        self.assertEqual(result, "Success")
+        self.assertEqual(func(), "success")
+        self.assertEqual(attempts["count"], 1)
 
-    def test_retry_limit(self):
-        """Проверяет, что декоратор корректно ограничивает количество попыток"""
-        retry_count = 5
+    def test_success_on_retry(self):
+        """Проверяем корректное выполение на второй попытке"""
+        attempts = {"count": 0}
 
-        @retry_deco(max_retries=retry_count)
-        def failing_func():
-            raise RuntimeError("This always fails")
+        @retry_deco(max_retries=3)
+        def func():
+            attempts["count"] += 1
+            if attempts["count"] < 2:
+                raise ValueError("Try again")
+            return "success"
 
-        result = failing_func()
-        self.assertIsNone(result)
+        self.assertEqual(func(), "success")
+        self.assertEqual(attempts["count"], 2)
+
+    def test_fail_with_specific_exception(self):
+        """Проверяет на передачу исключения в декоратор"""
+        attempts = {"count": 0}
+
+        @retry_deco(max_retries=3, exceptions=[ValueError])
+        def func():
+            attempts["count"] += 1
+            raise ValueError("Stop retrying")
+
+        self.assertIsNone(func())
+        self.assertEqual(attempts["count"], 1)
+
+    def test_other_exception_does_not_stop_retries(self):
+        """Проверяет, что другие исключения не приводят к завершению попыток"""
+        attempts = {"count": 0}
+
+        @retry_deco(max_retries=3, exceptions=[ValueError])
+        def func():
+            attempts["count"] += 1
+            if attempts["count"] < 3:
+                raise TypeError("Retry")
+            return "success"
+
+        self.assertEqual(func(), "success")
+        self.assertEqual(attempts["count"], 3)
+
+    def test_no_exceptions_passed(self):
+        """Проверяем, что достигнуто маскимальное количество попыток"""
+        attempts = {"count": 0}
+
+        @retry_deco(max_retries=3)
+        def func():
+            attempts["count"] += 1
+            raise ValueError("Fail with no exception filter")
+
+        self.assertIsNone(func())
+        self.assertEqual(attempts["count"], 3)
 
 
 if __name__ == "__main__":
