@@ -36,3 +36,17 @@ jobs:
 
       - name: Check test coverage
         run: cd 01 && coverage report -m && cd ..
+      
+      - name: Check flake8 hw 2
+        run: cd 02 && flake8 . && cd ..
+
+      - name: Check pylint
+        if: ${{ always() }}
+        run: cd 02 && pylint . && cd ..   
+
+      - name: Check tests with pytest
+        if: ${{ always() }}
+        run: cd 02 && coverage run -m pytest . && cd ..
+
+      - name: Check test coverage
+        run: cd 02 && coverage report -m && cd ..
