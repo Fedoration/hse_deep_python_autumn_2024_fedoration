@@ -56,3 +56,6 @@ jobs:
       
       - name: Check hw 5
         run: cd 05 && flake8 . && pylint . && coverage run -m pytest . && coverage report -m && cd ..
+      
+      - name: Check hw 6
+        run: cd 06 && flake8 . && pylint . && coverage run -m pytest . && coverage report -m && cd ..
