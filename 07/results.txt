@@ -1,0 +1,48 @@
+https://meowfacts.herokuapp.com/?count=3:
+{"data":["Statistics indicate that animal lovers in recent years have shown a preference for cats over dogs!","Wikipedia has a recording of a cat meowing because why not?","Cat families usually play best in even numbers. Cats and kittens should be aquired in pairs whenever possible."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=3:
+{"data":["Cheetahs communicate by purring and meowing like housecats, they cannot roar like big cats (e.g. lions).","The way you treat kittens in the early stages of it's life will render it's personality traits later in life.","Neutering a cat extends its life span by two or three years."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=3:
+{"data":["Statistics indicate that animal lovers in recent years have shown a preference for cats over dogs!","Cats have 30 vertebrae--5 more than humans have.","You check your cats pulse on the inside of the back thigh, where the leg joins to the body. Normal for cats: 110-170 beats per minute."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=3:
+{"data":["A cat's whiskers are thought to be a kind of radar, which helps a cat gauge the space it intends to walk through.","Tabby cats are thought to get their name from Attab, a district in Baghdad, now the capital of Iraq.","A cat can sprint at about thirty-one miles per hour."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=2:
+{"data":["Cats can not taste sweetness.","A cat has ran for mayor of Mexico City in 2013."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=2:
+{"data":["Tabby cats are thought to get their name from Attab, a district in Baghdad, now the capital of Iraq.","Adult cats only meow to communicate with humans."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=2:
+{"data":["Neutering a cat extends its life span by two or three years.","Tabby cats are thought to get their name from Attab, a district in Baghdad, now the capital of Iraq."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=2:
+{"data":["Adult cats only meow to communicate with humans.","The chlorine in fresh tap water irritates sensitive parts of the cat's nose. Let tap water sit for 24 hours before giving it to a cat."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=1:
+{"data":["Cats, especially older cats, do get cancer. Many times this disease can be treated successfully."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=1:
+{"data":["Statistics indicate that animal lovers in recent years have shown a preference for cats over dogs!"]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=1:
+{"data":["Cats can drink sea water in order to survive."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=1:
+{"data":["A cat has ran for mayor of Mexico City in 2013."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=1:
+{"data":["A cat's brain is more similar to a man's brain than that of a dog."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=1:
+{"data":["Cats must have fat in their diet because they cannot produce it on their own."]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=1:
+{"data":["80% of orange cats are male"]}
+--------------------------------------------------------------------------------
+https://meowfacts.herokuapp.com/?count=1:
+{"data":["In 1987 cats overtook dogs as the number one pet in America."]}
+--------------------------------------------------------------------------------
