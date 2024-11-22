@@ -8,24 +8,31 @@ def retry_deco(max_retries=3, exceptions=None):
     def retry_decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            for attempt in range(max_retries):
+            last_exception = None
+            for attempt in range(1, max_retries + 1):
                 try:
-                    print_str = f"run '{func.__name__}' with"
-                    print_str += f"poositional args = {args}, " if args else ""
-                    print_str += f"keywords kwargs = {kwargs}, " if kwargs else ""
-
                     result = func(*args, **kwargs)
-                    print(print_str + f"attempt = {attempt + 1}, result = {result}")
-                    return result
-
-                except Exception as e:
                     print(
-                        print_str
-                        + f"attempt = {attempt + 1}, exception = {e.__class__.__name__}"
+                        f"run '{func.__name__}' with args={args}, kwargs={kwargs}, "
+                        f"attempt={attempt}, result={result}"
                     )
-                    if isinstance(e, tuple(exceptions)):
-                        break
-                    continue
+                    return result
+                except tuple(exceptions) as e:
+                    print(
+                        f"run '{func.__name__}' with args={args}, kwargs={kwargs}, "
+                        f"attempt={attempt}, exception={e.__class__.__name__}"
+                    )
+                    raise  # Перевыбрасываем исключение из списка разрешенных
+                except Exception as e:
+                    last_exception = e
+                    print(
+                        f"run '{func.__name__}' with args={args}, kwargs={kwargs}, "
+                        f"attempt={attempt}, exception={e.__class__.__name__}"
+                    )
+
+            # После всех попыток перевыбрасываем последнее исключение
+            if last_exception:
+                raise last_exception
 
             return None
 
