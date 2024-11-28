@@ -1,9 +1,8 @@
 from __future__ import annotations
+from typing import List, Union
 
 
 class CustomList(list):
-    def __init__(self, *args):
-        super().__init__(*args)
 
     def __add__(self, other):
         if isinstance(other, int):
@@ -59,9 +58,12 @@ class CustomList(list):
 
         return NotImplemented
 
-    def __eq__(self, other: CustomList) -> bool:
+    def __eq__(self, other: Union[CustomList, List]) -> bool:
         if isinstance(other, CustomList):
-            return sum(self) == sum(other)
+            return len(self) == len(other) and all(x == y for x, y in zip(self, other))
+
+        if isinstance(other, list):
+            return len(self) == len(other) and all(x == y for x, y in zip(self, other))
         return False
 
     def __ne__(self, other: CustomList) -> bool:
