@@ -40,7 +40,6 @@ def test_dynamic_attributes():
     inst = CustomClass()
 
     inst.dynamic = "added later"
-    assert hasattr(inst, "custom_dynamic")
     assert inst.custom_dynamic == "added later"
 
     with pytest.raises(AttributeError):

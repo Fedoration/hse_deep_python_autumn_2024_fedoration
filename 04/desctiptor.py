@@ -7,6 +7,11 @@ class BaseDescriptor:
     def __set_name__(self, owner, name):
         self.name = name
 
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        return instance.__dict__.get(self.name, None)
+
     def __set__(self, instance, value):
         self.validate(value)
         instance.__dict__[self.name] = value

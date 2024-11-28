@@ -7,15 +7,26 @@ class CustomMeta(type):
                 new_dct[f"custom_{key}"] = value
             else:
                 new_dct[key] = value
-        return super().__new__(mcs, name, bases, new_dct)
+        cls = super().__new__(mcs, name, bases, new_dct)
+
+        orig_setattr = cls.__setattr__
+
+        def custom_setattr(self, name, value):
+            if not (name.startswith("__") and name.endswith("__")):
+                self.__dict__[f"custom_{name}"] = value
+            else:
+                orig_setattr(self, name, value)
+
+        cls.__setattr__ = custom_setattr
+        return cls
 
     def __call__(cls, *args, **kwargs):
-        # Создаем экземпляр
+        # Создаем экземпляр класса
         instance = super().__call__(*args, **kwargs)
         return instance
 
     def __setattr__(cls, name, value):
-        # Подменяем динамически добавленные атрибуты класса
+        # Динамическая обработка атрибутов класса
         if not (name.startswith("__") and name.endswith("__")):
             super().__setattr__(f"custom_{name}", value)
         else:
@@ -33,10 +44,3 @@ class CustomClass(metaclass=CustomMeta):
 
     def __str__(self):
         return "Custom_by_metaclass"
-
-    def __setattr__(self, name, value):
-        # Для экземпляров также подменяем атрибуты
-        if not (name.startswith("__") and name.endswith("__")):
-            self.__dict__[f"custom_{name}"] = value
-        else:
-            self.__dict__[name] = value
