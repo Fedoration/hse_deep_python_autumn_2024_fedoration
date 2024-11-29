@@ -58,12 +58,9 @@ class CustomList(list):
 
         return NotImplemented
 
-    def __eq__(self, other: Union[CustomList, List]) -> bool:
+    def __eq__(self, other: CustomList) -> bool:
         if isinstance(other, CustomList):
-            return len(self) == len(other) and all(x == y for x, y in zip(self, other))
-
-        if isinstance(other, list):
-            return len(self) == len(other) and all(x == y for x, y in zip(self, other))
+            return sum(self) == sum(other)
         return False
 
     def __ne__(self, other: CustomList) -> bool:
