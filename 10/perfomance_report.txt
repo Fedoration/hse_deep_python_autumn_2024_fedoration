@@ -1,0 +1,15 @@
+Test 1 passed
+Test 2 passed
+Test 3 passed
+Test 4 passed
+========== loads speed test ========== 
+json:   0.0002129077911376953
+ujson: 0.00013899803161621094
+cjson: 0.00019311904907226562
+
+========== dumps speed test ========== 
+json:   0.00013899803161621094
+cjson: 0.0020880699157714844
+
+Test 5 passed
+All tests passed
