@@ -59,4 +59,7 @@ jobs:
         run: cd 08 && flake8 . && pylint . && cd ..
       
       - name: Check hw 9
-        run: cd 09 && flake8 . && pylint . && cd .. 
+        run: cd 09 && flake8 . && pylint . && cd ..
+      
+      - name: Check hw 10
+        run: cd 10 && flake8 . && pylint . && make && make test && cd ..

@@ -1,8 +1,10 @@
+from typing import Union
 import argparse
 from pathlib import Path
 import asyncio
 from aiohttp import ClientError
 import aiohttp
+import aiofiles
 
 
 class URLFetcher:
@@ -20,25 +22,39 @@ class URLFetcher:
         except ClientError as e:
             return f"Ошибка при обработке URL {url}: {e}"
 
-    async def fetch_all(self, urls: list[str]) -> list[str]:
-        """Асинхронно обрабатывает список URL-ов."""
+    async def fetch_all(self, urls: Union[Path, list[str]]):
         async with aiohttp.ClientSession(
             connector=aiohttp.TCPConnector(ssl=False)
         ) as session:
-            tasks = [self.fetch(session, url) for url in urls]
-            return await asyncio.gather(*tasks)
+            tasks = []
+            if isinstance(urls, Path):
+                async with aiofiles.open(urls, mode="r") as file:
+                    async for line in file:
+                        url = line.strip()
+                        if url:
+                            tasks.append(self.fetch(session, url))
+                            if len(tasks) >= self.concurrency:
+                                for result in await asyncio.gather(*tasks):
+                                    yield result
+                                tasks = []
+            elif isinstance(urls, list):
+                for url in urls:
+                    tasks.append(self.fetch(session, url))
+                    if len(tasks) >= self.concurrency:
+                        for result in await asyncio.gather(*tasks):
+                            yield result
+                        tasks = []
+            if tasks:
+                for result in await asyncio.gather(*tasks):
+                    yield result
 
 
 async def main(concurrency: int, urls_file: Path):
     """Основная функция для обработки URL-ов."""
-    urls = urls_file.read_text().splitlines()
     fetcher = URLFetcher(concurrency)
-    results = await fetcher.fetch_all(urls)
-
-    # Сохраняем результаты в файл
-    with open("results.txt", "w", encoding="utf-8") as f:
-        for url, content in zip(urls, results):
-            f.write(f"{url}:\n{content}\n{'-' * 80}\n")
+    async for result in fetcher.fetch_all(urls_file):
+        with open("results.txt", "a", encoding="utf-8") as f:
+            f.write(result + "\n" + "-" * 80 + "\n")
 
 
 if __name__ == "__main__":
