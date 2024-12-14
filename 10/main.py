@@ -86,7 +86,8 @@ def test_speed():
     runtime_cjson = stop_ts_cjson - start_ts_cjson
 
     print(
-        f"========== loads speed test ========== \njson:\t{runtime_json}\nujson: {runtime_ujson}\ncjson: {runtime_cjson}\n"
+        f"========== loads speed test ========== \njson:\t{runtime_json}\nujson: {runtime_ujson}\n \
+        cjson: {runtime_cjson}\n"
     )
 
     start_ts_json = time.time()
@@ -95,7 +96,7 @@ def test_speed():
     runtime_json = stop_ts_json - start_ts_json
 
     start_ts_cjson = time.time()
-    cjson_dump = cjson.dumps(json_test_data)
+    _ = cjson.dumps(json_test_data)
     stop_ts_cjson = time.time()
     runtime_cjson = stop_ts_cjson - start_ts_cjson
 
