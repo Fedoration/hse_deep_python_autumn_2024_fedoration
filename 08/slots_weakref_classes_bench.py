@@ -1,11 +1,9 @@
-from .classes import (
+from classes import (
     RegularAttributes,
     SlotsAttributes,
-    WeakrefAttributesProper,
+    WeakrefAttributes,
     measure_creation_time,
     measure_access_time,
-    measure_access_with_weakref,
-    measure_creation_with_weakref,
 )
 
 
@@ -33,10 +31,10 @@ def main():
         access_times["Slots"].append(access_time_slots)
 
         # Weakref
-        creation_time_weakref, created_objects_weakref = measure_creation_with_weakref(
-            WeakrefAttributesProper, num_objects
+        creation_time_weakref, created_objects_weakref = measure_creation_time(
+            WeakrefAttributes, num_objects
         )
-        access_time_weakref = measure_access_with_weakref(created_objects_weakref)
+        access_time_weakref = measure_access_time(created_objects_weakref)
         creation_times["Weakref"].append(creation_time_weakref)
         access_times["Weakref"].append(access_time_weakref)
 

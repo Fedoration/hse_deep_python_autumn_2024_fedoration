@@ -4,7 +4,7 @@ import io
 
 from memory_profiler import profile
 
-from .classes import (
+from classes import (
     RegularAttributes,
     SlotsAttributes,
     WeakrefAttributesProper,
