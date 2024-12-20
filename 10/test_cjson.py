@@ -2,6 +2,7 @@
 import json
 import time
 from random import randint
+import pytest
 
 import cjson
 import ujson
@@ -60,6 +61,32 @@ def test_dumps_with_digits():
     cjson_dump = cjson.dumps(json_test_data)
 
     assert json_dump == cjson_dump
+
+
+def test_invalid_loads():
+    invalid_json_strings = [
+        "[1, 2, 3]",
+        "",
+        "null",
+        "true",
+    ]
+
+    for invalid_json in invalid_json_strings:
+        with pytest.raises(TypeError):
+            cjson.loads(invalid_json)
+
+
+def test_invalid_dumps():
+    invalid_objects = [
+        "string",
+        123,
+        [1, 2, 3],
+        None,
+    ]
+
+    for invalid_object in invalid_objects:
+        with pytest.raises(TypeError):
+            cjson.dumps(invalid_object)
 
 
 def test_speed():
